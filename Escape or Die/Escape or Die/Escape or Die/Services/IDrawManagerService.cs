@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Escape_or_Die.Objects;
+
 namespace Escape_or_Die
 {
     public interface IDrawManagerService
@@ -18,7 +20,7 @@ namespace Escape_or_Die
         Texture2D SquareWhite { get; }
         Texture2D SquareBlack { get; }
 
-        void AddSprite(Sprite sprite);
-        void RemoveSprite(Sprite sprite);
+        void AddGameObject(GameObject gameObject);
+        void RemoveGameObject(GameObject gameObject);
     }
 }

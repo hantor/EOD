@@ -11,16 +11,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using Escape_or_Die.Interfaces;
+using Escape_or_Die.Objects;
 
 namespace Escape_or_Die.Services
 {
-    public interface ICollisionDetectionService
+    public interface ICollisionManagerService
     {
-        void AddStaticCollideable(IStaticCollideable staticCollideable);
-        void RemoveStaticCollideable(IStaticCollideable staticCollideable);
+        void AddStaticGameObject(StaticGameObject staticGameObject);
+        void RemoveStaticGameObject(StaticGameObject staticGameObject);
 
-        void AddDynamicCollideable(IDynamicCollideable dynamicCollideable);
-        void RemoveDynamicCollideable(IDynamicCollideable dynamicCollideable);
+        void AddDynamicGameObject(DynamicGameObject dynamicGameObject);
+        void RemoveDynamicGameObject(DynamicGameObject dynamicGameObject);
     }
 }

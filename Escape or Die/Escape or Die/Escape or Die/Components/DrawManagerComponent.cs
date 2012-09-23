@@ -11,12 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Escape_or_Die.Objects;
+
 namespace Escape_or_Die
 {
     public class DrawManagerComponent : DrawableGameComponent, IDrawManagerService
     {
         SpriteBatch _spriteBatch;
-        List<Sprite> _sprites;
+        List<GameObject> _gameObjects;
 
         Texture2D _squareWhite;
         Texture2D _squareBlack;
@@ -27,7 +29,7 @@ namespace Escape_or_Die
         public DrawManagerComponent(Game game)
             : base(game)
         {
-            _sprites = new List<Sprite>();
+            _gameObjects = new List<GameObject>();
         }
 
         public override void Initialize()
@@ -58,19 +60,19 @@ namespace Escape_or_Die
 
             _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            IEnumerator<Sprite> spritesEnumerator = _sprites.GetEnumerator();
+            IEnumerator<GameObject> spritesEnumerator = _gameObjects.GetEnumerator();
             while (spritesEnumerator.MoveNext())
             {
                 _spriteBatch.Draw(
-                    spritesEnumerator.Current.Texture,
-                    spritesEnumerator.Current.Position,
-                    spritesEnumerator.Current.SourceRectangle,
-                    spritesEnumerator.Current.Color,
-                    spritesEnumerator.Current.Rotation,
-                    spritesEnumerator.Current.Origin,
-                    spritesEnumerator.Current.Scale,
-                    spritesEnumerator.Current.Effects,
-                    spritesEnumerator.Current.LayerDepth
+                    spritesEnumerator.Current.GetTexture(),
+                    spritesEnumerator.Current.GetPosition(),
+                    spritesEnumerator.Current.GetSourceRectangle(),
+                    spritesEnumerator.Current.GetColor(),
+                    spritesEnumerator.Current.GetRotation(),
+                    spritesEnumerator.Current.GetOrigin(),
+                    spritesEnumerator.Current.GetScale(),
+                    spritesEnumerator.Current.GetEffects(),
+                    spritesEnumerator.Current.GetLayerDepth()
                     );
             }
 
@@ -80,14 +82,14 @@ namespace Escape_or_Die
         }
 
 
-        public void AddSprite(Sprite sprite)
+        public void AddGameObject(GameObject gameObject)
         {
-            IEnumerator<Sprite> spritesEnumerator = _sprites.GetEnumerator();
+            IEnumerator<GameObject> spritesEnumerator = _gameObjects.GetEnumerator();
             bool exists = false;
 
             while (spritesEnumerator.MoveNext())
             {
-                if (spritesEnumerator.Current == sprite)
+                if (spritesEnumerator.Current == gameObject)
                 {
                     exists = true;
                 }
@@ -95,18 +97,18 @@ namespace Escape_or_Die
 
             if (!exists)
             {
-                _sprites.Add(sprite);
+                _gameObjects.Add(gameObject);
             }
         }
 
-        public void RemoveSprite(Sprite sprite)
+        public void RemoveGameObject(GameObject gameObject)
         {
-            IEnumerator<Sprite> spritesEnumerator = _sprites.GetEnumerator();
+            IEnumerator<GameObject> spritesEnumerator = _gameObjects.GetEnumerator();
             bool exists = false;
 
             while (spritesEnumerator.MoveNext())
             {
-                if (spritesEnumerator.Current == sprite)
+                if (spritesEnumerator.Current == gameObject)
                 {
                     exists = true;
                 }
@@ -114,7 +116,7 @@ namespace Escape_or_Die
 
             if (exists)
             {
-                _sprites.Remove(sprite);
+                _gameObjects.Remove(gameObject);
             }
         }
     }

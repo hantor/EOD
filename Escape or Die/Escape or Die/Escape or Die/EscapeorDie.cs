@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Escape_or_Die.Components;
 using Escape_or_Die.Services;
+using Escape_or_Die.Objects;
 
 namespace Escape_or_Die
 {
@@ -20,10 +21,12 @@ namespace Escape_or_Die
     public class EscapeorDie : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        CollisionDetectionComponent _collisionDetectionComponent;
+        CollisionManagerComponent _collisionManagerComponent;
         KeyboardManagerComponent _keyboardManagerComponent;
         DrawManagerComponent _drawManagerComponent;
+
         Player _player;
+        StaticCrate _crate;
 
         public EscapeorDie()
         {
@@ -33,7 +36,7 @@ namespace Escape_or_Die
 
             Content.RootDirectory = "Content";
 
-            _collisionDetectionComponent = new CollisionDetectionComponent(this);
+            _collisionManagerComponent = new CollisionManagerComponent(this);
             _keyboardManagerComponent = new KeyboardManagerComponent(this);
             _drawManagerComponent = new DrawManagerComponent(this);
         }
@@ -46,11 +49,11 @@ namespace Escape_or_Die
         /// </summary>
         protected override void Initialize()
         {
-            Components.Add(_collisionDetectionComponent);
+            Components.Add(_collisionManagerComponent);
             Components.Add(_keyboardManagerComponent);
             Components.Add(_drawManagerComponent);
 
-            Services.AddService(typeof(ICollisionDetectionService), _collisionDetectionComponent);
+            Services.AddService(typeof(ICollisionManagerService), _collisionManagerComponent);
             Services.AddService(typeof(IKeyboardManagerService), _keyboardManagerComponent);
             Services.AddService(typeof(IDrawManagerService), _drawManagerComponent);
 
@@ -64,6 +67,7 @@ namespace Escape_or_Die
         protected override void LoadContent()
         {
             _player = new Player(this);
+            _crate = new StaticCrate(this);
         }
 
         /// <summary>
@@ -83,6 +87,7 @@ namespace Escape_or_Die
         {
             // TODO: Add your update logic here
             _player.Update(gameTime);
+            _crate.Update(gameTime);
 
             base.Update(gameTime);
         }
